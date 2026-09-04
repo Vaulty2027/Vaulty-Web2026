@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Simulador interactivo de vida, decisiones, amistades y finanzas personales." />
+  <meta name="theme-color" content="#071321" />
+<link rel="stylesheet" href="Juego_3.css">
+  <link rel="icon" href="img/logo_vaulty+.png" type="image/png">
+  <title>Vida de Ahorros — Tu historia, tus decisiones</title>
+  
+</head>
+<body>
+  <div class="ambient-bg" aria-hidden="true">
+    <span class="orb orb-one"></span>
+    <span class="orb orb-two"></span>
+    <span class="orb orb-three"></span>
+    <span class="grid-glow"></span>
+  </div>
+
+  <main id="app">
+    <section id="startScreen" class="screen active hero-screen">
+      <div class="hero-copy">
+        <p class="eyebrow">simulador narrativo de vida financiera</p>
+        <h1>Tu vida.<br><span>Mil caminos.</span></h1>
+        <p class="lead">
+          El dinero importa, pero no lo es todo. Construye una carrera, cuida tu salud,
+          crea amistades reales y decide qué significa para ti vivir bien.
+        </p>
+        <div class="feature-pills" aria-label="Características del juego">
+          <span>✦ Decisiones ramificadas</span>
+          <span>☺ Relaciones vivas</span>
+          <span>↗ Progreso que se guarda</span>
+        </div>
+        <div class="hero-actions">
+          <button id="startBtn" class="primary-btn">Crear mi historia <span>→</span></button>
+          <button id="continueBtn" class="ghost-btn">Continuar partida</button>
+        </div>
+      </div>
+      <aside class="story-preview" aria-hidden="true">
+        <div class="preview-window-bar"><i></i><i></i><i></i><span>Capítulo 08</span></div>
+        <div class="preview-balance">
+          <div><small>Patrimonio</small><strong>$12,480</strong></div>
+          <span class="trend">+12%</span>
+        </div>
+        <div class="preview-story">
+          <span class="preview-icon">☕</span>
+          <small>UNA DECISIÓN DIFÍCIL</small>
+          <strong>Tu amiga necesita que la escuches</strong>
+          <p>El tiempo también es una inversión.</p>
+          <div class="preview-choice active">Acompañarla esta tarde</div>
+          <div class="preview-choice">Priorizar el trabajo</div>
+        </div>
+        <div class="preview-people">
+          <div class="avatar-stack"><span>LU</span><span>MA</span><span>SO</span></div>
+          <p><strong>3 vínculos</strong><small>Tu red también crece contigo</small></p>
+        </div>
+      </aside>
+    </section>
+
+    <section id="creatorScreen" class="screen">
+      <div class="creator-heading">
+        <button id="backToStartBtn" class="back-btn" type="button" aria-label="Volver al inicio">←</button>
+        <div>
+          <p class="eyebrow">antes del primer capítulo</p>
+          <h2>¿Quién quieres ser?</h2>
+          <p>Tu punto de partida abre oportunidades diferentes. Ningún camino es perfecto.</p>
+        </div>
+      </div>
+      <div class="creator-layout">
+        <form id="creatorForm" class="panel creator-form">
+          <div class="field-grid">
+            <label>¿Cómo te llamas?<input id="playerName" type="text" maxlength="18" placeholder="Ej: Alex" autocomplete="off" required /></label>
+            <label>Edad inicial<input id="playerAge" type="number" min="18" max="55" value="22" required /></label>
+            <label>Formación
+              <select id="educationSelect">
+                <option value="secundaria">Secundaria</option>
+                <option value="tecnico">Técnico</option>
+                <option value="universidad" selected>Universidad</option>
+                <option value="posgrado">Posgrado</option>
+              </select>
+            </label>
+            <label>Relación con el dinero
+              <select id="lifestyleSelect">
+                <option value="ahorrador">Planifico cada dólar</option>
+                <option value="equilibrado" selected>Busco equilibrio</option>
+                <option value="gastador">Vivo el presente</option>
+              </select>
+            </label>
+            <label>Tu comienzo
+              <select id="originSelect">
+                <option value="familia">Vivo con mi familia</option>
+                <option value="independiente" selected>Me independicé</option>
+                <option value="nuevo">Llegué a una nueva ciudad</option>
+                <option value="emprendedor">Tengo una pequeña idea</option>
+              </select>
+            </label>
+            <label>Tu gran sueño
+              <select id="aspirationSelect">
+                <option value="libertad">Libertad financiera</option>
+                <option value="hogar">Tener un hogar propio</option>
+                <option value="carrera">Una carrera extraordinaria</option>
+                <option value="comunidad">Una vida llena de vínculos</option>
+              </select>
+            </label>
+          </div>
+          <button class="primary-btn wide-btn" type="submit">Comenzar el capítulo 1 <span>→</span></button>
+        </form>
+        <aside class="panel creator-guide">
+          <span class="guide-number">01</span>
+          <p class="eyebrow">tu brújula</p>
+          <h3>El éxito tiene más de una forma</h3>
+          <p>Cada mes tendrás tres puntos de tiempo. Podrás usarlos para trabajar en ti, ganar dinero o cuidar a las personas importantes.</p>
+          <ul>
+            <li><span>◉</span> Tus amistades recuerdan cómo las trataste.</li>
+            <li><span>◉</span> El estrés, la salud y la felicidad cambian tus opciones.</li>
+            <li><span>◉</span> Ahorrar ayuda, pero algunas oportunidades no se repiten.</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section id="gameScreen" class="screen">
+      <header class="game-header">
+        <div class="game-brand">
+          <span class="brand-mark small">VA</span>
+          <div><p id="lifeSubtitle" class="eyebrow">capítulo 1 · enero</p><h2 id="playerTitle">La vida de Alex</h2></div>
+        </div>
+        <div class="header-actions">
+          <span id="timeBadge" class="time-badge">Año 1 · Mes 1</span>
+          <button id="saveBtn" class="ghost-btn small-btn">Guardar</button>
+          <button id="resetBtn" class="danger-btn small-btn">Nueva vida</button>
+        </div>
+      </header>
+
+      <section class="dashboard" aria-label="Resumen financiero">
+        <article class="money-card main-money"><span>Dinero disponible</span><strong id="cashValue">$0</strong><small id="cashTrend">Listo para decidir</small></article>
+        <article class="money-card"><span>Ingresos</span><strong id="incomeValue">$0</strong><small>al mes</small></article>
+        <article class="money-card"><span>Gastos</span><strong id="expensesValue">$0</strong><small id="expenseHint">estimados</small></article>
+        <article class="money-card"><span>Deuda</span><strong id="debtValue">$0</strong><small id="debtHint">bajo control</small></article>
+        <article class="money-card"><span>Patrimonio</span><strong id="netWorthValue">$0</strong><small>tu progreso real</small></article>
+      </section>
+
+      <section class="pulse-strip">
+        <div><span class="pulse-icon">⚡</span><p><small>Tiempo este mes</small><strong id="energyValue">3 de 3 acciones</strong></p></div>
+        <div><span class="pulse-icon social">☺</span><p><small>Red de apoyo</small><strong id="socialPulse">Dos personas cerca</strong></p></div>
+        <div><span class="pulse-icon goal">◎</span><p><small>Sueño principal</small><strong id="aspirationBadge">Libertad financiera</strong></p></div>
+      </section>
+
+      <section class="game-layout">
+        <aside class="side-panel">
+          <div class="panel player-card">
+            <div class="avatar"><span id="avatarInitial">A</span></div>
+            <div><h3 id="playerNameLabel">Alex</h3><p id="jobBadge">Buscando mi camino</p></div>
+          </div>
+          <div class="panel stats-panel">
+            <div class="panel-heading"><h3>Cómo estás</h3><span id="overallMood">En equilibrio</span></div>
+            <div id="statBars"></div>
+          </div>
+          <div class="panel chapter-panel">
+            <div class="panel-heading"><h3>Tu recorrido</h3><span id="chapterProgress">1/36</span></div>
+            <div class="timeline-track"><span id="timelineFill"></span></div>
+            <div id="lifeBoard" class="life-board"></div>
+          </div>
+          <div class="panel goals-panel">
+            <div class="panel-heading"><h3>Metas vivas</h3><span id="goalCount">0/8</span></div>
+            <div id="goalsList" class="goals-list"></div>
+          </div>
+        </aside>
+
+        <section class="main-panel">
+          <nav class="tabs" aria-label="Secciones del juego">
+            <button class="tab active" data-tab="life"><span>✦</span> Historia</button>
+            <button class="tab" data-tab="relationships"><span>☺</span> Personas</button>
+            <button class="tab" data-tab="work"><span>▣</span> Trabajo</button>
+            <button class="tab" data-tab="market"><span>◇</span> Mercado</button>
+            <button class="tab" data-tab="investments"><span>↗</span> Inversiones</button>
+            <button class="tab" data-tab="history"><span>≡</span> Mi vida</button>
+          </nav>
+
+          <div id="life" class="tab-panel active">
+            <article id="decisionCard" class="panel decision-card">
+              <div class="decision-topline"><span id="decisionCategory">VIDA REAL</span><span id="decisionChapter">CAPÍTULO 1</span></div>
+              <div class="decision-copy"><span id="decisionIcon" class="decision-icon">✦</span><div><h3 id="decisionTitle">Tu primera decisión</h3><p id="decisionText">Cada elección deja una huella.</p></div></div>
+              <div id="decisionContext" class="decision-context"></div>
+              <div id="decisionChoices" class="decision-choices"></div>
+              <div id="decisionOutcome" class="decision-outcome" hidden></div>
+            </article>
+            <div class="two-column">
+              <section class="panel action-panel">
+                <div class="panel-heading"><div><p class="eyebrow">elige cómo usar tu tiempo</p><h3>Acciones del mes</h3></div><span id="actionPoints">3 disponibles</span></div>
+                <div id="actionList" class="action-list"></div>
+              </section>
+              <section class="panel plan-panel">
+                <p class="eyebrow">piloto automático</p><h3>Tu plan financiero</h3><p>Al cerrar cada mes se aplicará este plan después de pagar tus gastos.</p>
+                <label>Ahorro automático <strong id="savingRateLabel">10%</strong><input id="savingRate" type="range" min="0" max="30" step="5" value="10" /></label>
+                <label>Pago extra a deuda <strong id="debtPaymentLabel">$50</strong><input id="debtPayment" type="range" min="0" max="300" step="25" value="50" /></label>
+                <div id="planForecast" class="plan-forecast"></div>
+              </section>
+            </div>
+            <div class="month-footer panel">
+              <div><p class="eyebrow">cuando estés listo</p><h3>Cierra el mes y descubre las consecuencias</h3><p id="eventText">Primero toma la decisión principal de este capítulo.</p></div>
+              <button id="advanceMonthBtn" class="primary-btn">Cerrar mes <span>→</span></button>
+            </div>
+          </div>
+
+          <div id="relationships" class="tab-panel">
+            <div class="panel split-panel"><div><p class="eyebrow">tu red de apoyo</p><h3>Las personas también son parte de tu patrimonio</h3><p>Comparte tiempo, escucha y construye confianza. Cada persona tiene su propia historia.</p></div><span id="relationshipSummary" class="summary-chip">2 personas conocidas</span></div>
+            <div id="relationshipCards" class="relationship-grid"></div>
+          </div>
+          <div id="work" class="tab-panel">
+            <div class="panel split-panel"><div><p class="eyebrow">carrera y propósito</p><h3>Elige un trabajo que encaje con tu vida</h3><p>El salario importa, pero también el estrés, el tiempo y las oportunidades.</p></div><button id="newJobOffersBtn" class="ghost-btn">Buscar nuevas ofertas · 1⚡</button></div>
+            <div id="jobOffers" class="cards-grid"></div>
+          </div>
+          <div id="market" class="tab-panel">
+            <div class="panel split-panel"><div><p class="eyebrow">decisiones de consumo</p><h3>Compra cosas que mejoren tu historia</h3><p>Algunas compras abren caminos; otras añaden gastos que tendrás que sostener.</p></div></div>
+            <div id="marketItems" class="cards-grid"></div>
+          </div>
+          <div id="investments" class="tab-panel">
+            <div class="panel split-panel"><div><p class="eyebrow">riesgo y recompensa</p><h3>Haz crecer el dinero sin perder la calma</h3><p>Diversifica y conserva un fondo de emergencia. El mercado cambia cada mes.</p></div><span id="riskProfile" class="summary-chip">Perfil equilibrado</span></div>
+            <div id="investmentItems" class="cards-grid"></div>
+            <div class="panel"><div class="panel-heading"><h3>Cartera actual</h3><span id="portfolioTotal">$0</span></div><div id="portfolioList" class="portfolio-list"></div></div>
+          </div>
+          <div id="history" class="tab-panel">
+            <div id="lifeSummary" class="panel life-summary"></div>
+            <div class="panel"><div class="panel-heading"><h3>Logros</h3><span id="achievementCount">0 desbloqueados</span></div><div id="achievementList" class="achievement-grid"></div></div>
+            <div class="two-column history-columns">
+              <div class="panel"><h3>Activos y posesiones</h3><div id="assetList" class="asset-list"></div></div>
+              <div class="panel"><h3>Diario de decisiones</h3><div id="historyList" class="history-list"></div></div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </section>
+
+    <section id="resultScreen" class="screen result-screen">
+      <div class="panel result-card">
+        <span id="resultIcon" class="result-icon">✦</span>
+        <p id="resultLabel" class="eyebrow">el final de esta etapa</p>
+        <h2 id="resultTitle">Tu historia</h2>
+        <p id="resultText"></p>
+        <div id="resultStats" class="result-stats"></div>
+        <div class="hero-actions center"><button id="playAgainBtn" class="primary-btn">Vivir otra historia</button><button id="continueAfterEndBtn" class="ghost-btn">Seguir en modo libre</button></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Cuadro de diálogo del Tutorial -->
+  <div id="tutorialTooltip" class="tutorial-tooltip">
+    <h3 id="tutorialTitle">¡Bienvenido!</h3>
+    <p id="tutorialText">Texto del tutorial.</p>
+    <button id="tutorialNextBtn" class="primary-btn">Entendido <span>→</span></button>
+  </div>
+
+  <dialog id="monthDialog" class="month-dialog">
+    <div class="dialog-content">
+      <span class="dialog-icon">↗</span>
+      <p class="eyebrow">resumen del mes</p>
+      <h2 id="monthDialogTitle">Un mes más de historia</h2>
+      <div id="monthDialogSummary" class="dialog-summary"></div>
+      <blockquote id="monthReflection"></blockquote>
+      <button id="closeMonthDialog" class="primary-btn wide-btn">Abrir el siguiente capítulo</button>
+    </div>
+  </dialog>
+
+  <div id="toastRegion" class="toast-region" role="status" aria-live="polite"></div>
+ <script src="Juego_3.js"></script>
+</body>
+</html>
