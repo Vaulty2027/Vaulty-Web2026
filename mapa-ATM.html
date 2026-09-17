@@ -1,71 +1,263 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
- <link rel="icon" href="img/logo_vaulty+.png" type="image/png">
-<title>Mapa de ATMs en Panamá</title>
 
-<!-- Leaflet CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" />
+  <meta charset="UTF-8">
 
-<!-- Nuestro CSS -->
-<link rel="stylesheet" href="mapa-ATM.css" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <link
+    rel="icon"
+    href="img/logo_vaulty+.png"
+    type="image/png"
+  >
+
+  <title data-atm-title>Mapa de ATMs en Panamá</title>
+
+
+  <!-- =========================================================
+    MAPLIBRE GL JS
+  ========================================================= -->
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/maplibre-gl@6.9.0/dist/maplibre-gl.css"
+  >
+
+
+  <!-- =========================================================
+    CSS DEL MAPA
+  ========================================================= -->
+
+  <link
+    rel="stylesheet"
+    href="mapa-ATM.css"
+  >
+
 </head>
+
+
 <body>
 
-<div class="app">
-  <div class="sidebar">
+  <div class="app">
 
-    <!-- BOTÓN DE REGRESO  -->
-    <div class="volver-container">
-      <a href="ATM.html" class="btn-volver">
-          <span class="flecha" aria-hidden="true">←</span>
-          <span data-es="Volver a ATM" data-en="Back to ATM">Volver a ATM</span>
-      </a>
+
+    <!-- =======================================================
+      SIDEBAR
+    ======================================================== -->
+
+    <div class="sidebar">
+
+
+      <!-- =====================================================
+        BOTÓN DE REGRESO
+      ====================================================== -->
+
+      <div class="volver-container">
+
+        <a
+          href="ATM.html"
+          class="btn-volver"
+        >
+
+          <span
+            class="flecha"
+            aria-hidden="true"
+          >
+            ←
+          </span>
+
+          <span data-atm-i18n="back">
+            Volver a ATM
+          </span>
+
+        </a>
+
+      </div>
+
+
+
+      <!-- =====================================================
+        TÍTULO
+      ====================================================== -->
+
+      <h1>
+
+        <span class="dot"></span>
+
+        <span data-atm-i18n="pageTitle">
+          ATMs en Panamá
+        </span>
+
+      </h1>
+
+
+
+      <!-- =====================================================
+        SUBTÍTULO
+      ====================================================== -->
+
+      <p
+        class="sub"
+        data-atm-i18n="subtitle"
+      >
+        Todas las Provincias
+      </p>
+
+
+
+      <!-- =====================================================
+        BUSCADOR
+      ====================================================== -->
+
+      <div class="search-box">
+
+        <input
+          id="searchInput"
+          type="text"
+          data-atm-i18n-placeholder="search"
+          placeholder="Buscar por nombre o dirección..."
+          autocomplete="off"
+        >
+
+      </div>
+
+
+
+      <!-- =====================================================
+        FILTRO DE CIUDAD
+      ====================================================== -->
+
+      <div
+        class="filter-label"
+        data-atm-i18n="cityZone"
+      >
+        Ciudad / Zona
+      </div>
+
+
+      <select id="citySelect">
+
+        <option
+          value="all"
+          data-atm-i18n="allZones"
+        >
+          Todas las zonas
+        </option>
+
+      </select>
+
+
+
+      <!-- =====================================================
+        FILTRO DE BANCO
+      ====================================================== -->
+
+      <div
+        class="filter-label"
+        data-atm-i18n="filterBank"
+      >
+        Filtrar por banco
+      </div>
+
+
+      <div
+        class="bank-filters"
+        id="bankFilters"
+      >
+      </div>
+
+
+
+      <!-- =====================================================
+        ESTADÍSTICAS
+      ====================================================== -->
+
+      <div class="stats">
+
+        <span data-atm-i18n="showing">
+          Mostrando
+        </span>
+
+        <b id="countShown">
+          0
+        </b>
+
+        <span data-atm-i18n="of">
+          de
+        </span>
+
+        <b id="countTotal">
+          0
+        </b>
+
+        <span data-atm-i18n="atms">
+          ATMs
+        </span>
+
+      </div>
+
+
+
+      <!-- =====================================================
+        RESULTADOS
+      ====================================================== -->
+
+      <div
+        class="list-label"
+        data-atm-i18n="results"
+      >
+        Resultados
+      </div>
+
+
+      <div
+        class="atm-list"
+        id="atmList"
+      >
+      </div>
+
+
     </div>
 
-    <h1><span class="dot"></span>ATMs en Panamá</h1>
-    <p class="sub">Todas las Provincias</p>
 
-    <div class="search-box">
-      <input id="searchInput" type="text" placeholder="Buscar por nombre o dirección..." />
-    </div>
 
-    <div class="filter-label">Ciudad / Zona</div>
-    <select id="citySelect">
-      <option value="all">Todas las zonas</option>
-      <option value="Panamá">Panamá</option>
-      <option value="David, Chiriquí">David, Chiriquí</option>
-      <option value="Santiago, Veraguas">Santiago, Veraguas</option>
-      <option value="Penonomé, Coclé">Penonomé, Coclé</option>
-      <option value="Colón">Colón</option>
-      <option value="Chitré, Herrera">Chitré, Herrera</option>
-      <option value="La Mesa, Los Santos">La Mesa, Los Santos</option>
-      <option value="Santa María, Darién">Santa María, Darién</option>
-      <option value="Boca del Toro, Bocas del Toro">Boca del Toro, Bocas del Toro</option>
-      <option value="Panama Oeste">Panama Oeste</option>
-    </select>
+    <!-- =======================================================
+      MAPA
+    ======================================================== -->
 
-    <div class="filter-label">Filtrar por banco</div>
-    <div class="bank-filters" id="bankFilters"></div>
+    <div id="map"></div>
 
-    <div class="stats">
-      Mostrando <b id="countShown">0</b> de <b id="countTotal">0</b> ATMs
-    </div>
 
-    <div class="list-label">Resultados</div>
-    <div class="atm-list" id="atmList"></div>
   </div>
 
-  <div id="map"></div>
-</div>
 
-<!-- Leaflet JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 
-<!-- Datos y lógica -->
-<script src="mapa-ATM.js"></script>
-<script type="module" src="auth.js"></script>
+  <!-- =========================================================
+    MAPA-ATM.JS
+  ========================================================= -->
+
+  <script
+    type="module"
+    src="mapa-ATM.js"
+  ></script>
+
+
+
+  <!-- =========================================================
+    AUTENTICACIÓN DE VAULTY+
+  ========================================================= -->
+
+  <script
+    type="module"
+    src="auth.js"
+  ></script>
+
+
 </body>
+
 </html>
